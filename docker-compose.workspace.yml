@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   onlyoffice-mysql-server:
     container_name: onlyoffice-mysql-server
@@ -16,7 +16,7 @@ services:
      - mysql_data:/var/lib/mysql
   onlyoffice-community-server:
     container_name: onlyoffice-community-server
-    image: onlyoffice/communityserver:11.0.0.1458
+    image: onlyoffice/communityserver:latest
     depends_on:
      - onlyoffice-mysql-server
      - onlyoffice-document-server
@@ -60,7 +60,7 @@ services:
      - ./certs:/var/www/onlyoffice/Data/certs
   onlyoffice-document-server:
     container_name: onlyoffice-document-server
-    image: onlyoffice/documentserver:6.0.2
+    image: onlyoffice/documentserver:latest
     stdin_open: true
     tty: true
     restart: always
@@ -94,7 +94,10 @@ services:
       - onlyoffice
     restart: always
     privileged: true
-    ports: ['25:25','143:143','587:587']
+    ports:
+        - '25:25'
+        - '143:143'
+        - '587:587'
     stdin_open: true
     tty: true
     expose:
@@ -110,7 +113,7 @@ services:
      - onlyoffice-document-server
      - onlyoffice-mail-server
      - onlyoffice-community-server
-    image: onlyoffice/controlpanel:2.9.0.351
+    image: onlyoffice/controlpanel:latest
     environment:
      - ONLYOFFICE_CORE_MACHINEKEY=core_secret
     expose:
